@@ -1,12 +1,8 @@
-const {Router} = require('express');
-const router=Router();
+const { Router } = require('express');
+const { renderLogin } = require('../controllers/users');
+const router = Router();
 
-router.get('/',(req,res)=>{
-    res.render("login");
-});
+router.route('/login')
+    .get(renderLogin)
 
-router.get('/compras',(req,res)=>{
-    res.render("compra");
-});
-
-module.exports=router;
+module.exports = router;
