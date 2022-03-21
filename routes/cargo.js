@@ -1,24 +1,28 @@
 const BD = require('../config/config');
 const { Router } = require('express');
-const { renderIndex, renderRealizar } = require('../controllers/ventas');
+const { renderIndex, renderListar, renderAdd, renderAddCargo, renderDeleteCargo, renderUPdate, renderUpdateCargo } = require('../controllers/cargo');
 const router = Router();
 
-router.get('/cargo', async (req,res)=>{
-    const listaCargos =[];
-    sql='SELECT * FROM public."Cargo" ORDER BY "idCargo" ASC ';
 
-    let result = await BD.open(sql,[],false);
-    result.rows.map(emp=>{
-        let cargoSchema = {
-            'id': emp[0],
-            'cargo':emp[1],
-        }
-        listaCargos.push(cargoSchema)
-    });
+router.route('/')
+    .get(renderIndex)
 
-    res.render('empleados',{
-        cargos : listaCargos,
-    })
-})
+router.route('/listar')
+    .get(renderListar)
+
+router.route('/add_cargo')
+    .get(renderAdd)
+
+router.route('/add_cargo')
+    .post(renderAddCargo)
+
+router.route('/delete_cargo/:id')
+    .get(renderDeleteCargo)
+
+router.route('/edit_cargo/:id')
+    .get(renderUPdate)
+
+router.route('/edit_cargo')
+    .post(renderUpdateCargo)
 
 module.exports = router

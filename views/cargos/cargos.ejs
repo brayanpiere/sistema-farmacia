@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>ESTA ES LA LISTA DE CARGOS</h1>
+    <a href="/cargos/add_cargo">Agregar Cargo</a>
+    <table>
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Codigo</th>
+                <th>Cargo</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let c=0 %>
+                <% cargos.forEach((car)=> { %>
+                    <% c++ %>
+                        <tr>
+                            <td>
+                                <%= c %>
+                            </td>
+                            <td>
+                                <%= car.id %>
+                            </td>
+                            <td>
+                                <%= car.cargo %>
+                            </td>
+                            <td>
+                                <a href="/cargos/edit_cargo/<%= car.id %>">Modificar</a>
+                                <a href="/cargos/delete_cargo/<%= car.id %>">Eliminar</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>

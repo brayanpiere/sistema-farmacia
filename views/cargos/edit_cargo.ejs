@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Modificar Cargo</h1>
+    <form action="/cargos/edit_cargo" method="post">
+        <label for="">Codigo</label>
+        <input type="text" name="cod" value="<%= cargos.id %>">
+        <label for="">Cargo</label>
+        <input type="text" name="cargo" value="<%= cargos.cargo %>">
+        <button type="submit">Agregar</button>
+        <a href="/cargos/listar">Cancelar</a>
+    </form>
+</body>
+</html>
