@@ -5,16 +5,22 @@ const renderIndex = (req, res) => {
 }
 
 const renderListar = async (req, res) => {
-    const listaCargos =[];
+    // const listaCargos =[];
     sql='SELECT * FROM public."Cargo" ORDER BY "idCargo" ASC ';
     let result = await BD.open(sql);
-    result.rows.map(emp=>{
-        let cargoSchema = {
-            'id': emp.idCargo,
-            'cargo':emp.nombreCargo,
-        }
-        listaCargos.push(cargoSchema)
-    });
+    // result.rows.map(emp=>{
+    //     let cargoSchema = {
+    //         'id': emp.idCargo,
+    //         'cargo':emp.nombreCargo,
+    //     }
+    //     listaCargos.push(cargoSchema)
+    // });
+    const listaCargos = result.rows.map(emp => ({
+        'id': emp.idCargo,
+        'cargo': emp.nombreCargo
+    }));
+    console.log(listaCargos);
+
     res.render("cargos/cargos",{
         cargos : listaCargos,
     });
@@ -40,19 +46,17 @@ const renderDeleteCargo = async (req, res) => {
 }
 
 const renderUPdate = async (req, res) => {
-    let listaCargos ;
+    // let listaCargos ;
     let cod=req.params.id;
     sql=`SELECT * FROM public."Cargo" WHERE "Cargo"."idCargo"=${cod} ORDER BY "idCargo" ASC `;
     let result = await BD.open(sql);
-    result.rows.map(emp=>{
-        let cargoSchema = {
-            'id': emp.idCargo,
-            'cargo':emp.nombreCargo,
-        }
-        listaCargos=cargoSchema
-    });
+    const listaCargos = result.rows.map(emp=>({
+        'id': emp.idCargo,
+        'cargo':emp.nombreCargo
+    }));
+    console.log(listaCargos);
     res.render("cargos/edit_cargo",{
-        cargos : listaCargos,
+        cargos : listaCargos[0],
     });
 }
 
