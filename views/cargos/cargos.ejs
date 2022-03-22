@@ -11,41 +11,58 @@
 
 <body>
 
-    <div class="container">
-        <h1>ESTA ES LA LISTA DE CARGOS</h1>
-        <a class="btn btn-outline-success" href="/cargos/add_cargo">Agregar Cargo</a>
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">N°</th>
-                        <th scope="col">Codigo</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Accion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% let c=0 %>
-                    <% cargos.forEach((car)=> { %>
-                        <% c++ %>
-                            <tr>
-                                <th scope="row">
-                                    <%= c %>
-                                </td>
-                                <td>
-                                    <%= car.id %>
-                                </td>
-                                <td>
-                                    <%= car.cargo[0].toUpperCase() + '' + car.cargo.slice(1) %>
-                                </td>
-                                <td class="text-end">
-                                    <a class="btn btn-warning" href="/cargos/edit_cargo/<%= car.id %>">Modificar</a>
-                                    <a class="btn btn-danger" href="/cargos/delete_cargo/<%= car.id %>">Eliminar</a>
-                                </td>
-                            </tr>
-                            <% }) %>
-                </tbody>
-            </table>
+    <div class="container-sm">
+        <div class="row row-cols-1 gy-2">
+            <div class="col">
+                <h1>ESTA ES LA LISTA DE CARGOS</h1>
+                <a class="btn btn-outline-success" href="/cargos/add_cargo">Agregar Cargo</a>                
+            </div>
+            <div class="col">
+                <div class="row row-cols-1 row-cols-md-3 justify-content-center">
+                    <!-- <div class="col-md-1 col-lg-2 col-xl-3">
+        
+                    </div> -->
+                    <div class="col col-md-10 col-lg-8 col-xl-6">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover align-middle text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N°</th>
+                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Cargo</th>
+                                        <th scope="col">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% let c=0 %>
+                                    <!-- Sintaxis ES6 -->
+                                    <% for (let car of cargos) { %>
+                                        <% c++ %>
+                                        <tr>
+                                            <th scope="row">
+                                                <%= c %>
+                                            </td>
+                                            <td>
+                                                <%= car.id %>
+                                            </td>
+                                            <td>
+                                                <%= car.cargo[0].toUpperCase() + '' + car.cargo.slice(1) %>
+                                            </td>
+                                            <td class="d-flex justify-content-center justify-content-xs-end">
+                                                <a class="btn btn-warning me-1" href="/cargos/edit_cargo/<%= car.id %>">Modificar</a>
+                                                <a class="btn btn-danger ms-1" href="/cargos/delete_cargo/<%= car.id %>">Eliminar</a>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-1 col-lg-2 col-xl-3">
+                        
+                    </div> -->
+                </div>
+            </div>
         </div>
     </div>
     
