@@ -4,124 +4,334 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realizar compra</title>
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-    <div class="filtros">
-        <h2>Filtros</h2>
-        <div class="tipoFarCard">
-            <input type="radio" name="tipofarmaco" id="laboratorio">
-            <label for="laboratorio">Laboratorio: </label>
-            <input type="radio" name="tipofarmaco" id="generico">
-            <label for="generico">Genérico: </label>
-            <input type="text" name="tipofarfield" id="tipofarfield">
-        </div>
-        <div class="prodCard">
-            <input type="checkbox" name="nomprod" id="nomprod">
-            <label for="nomprod">Nombre Producto</label>
-            <input type="text" name="dosisfield" id="dosisfield">
-        </div>
-        <div class="dosisCard">
-            <input type="checkbox" name="dosis" id="dosis">
-            <label for="dosis">Dosis</label>
-            <input type="text" name="dosisfield" id="dosisfield">
-        </div>
-        <button id="filtrarProds">Filtrar</button>
-    </div>
-    <div class="resultados">
-        <h2>Resultados</h2>
-        <div class="card">
-            <img src="/img/pills.jpg" alt="pills">
-            <div class="card-body">
-                <h5>Ambroxol 10mg</h5>
-                <button class="prodInfo">i</button>
-                <button class="prodAdd">+</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/img/pills.jpg" alt="pills">
-            <div class="card-body">
-                <h5>Betametasona 10mg</h5>
-                <button class="prodInfo">i</button>
-                <button class="prodAdd">+</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/img/pills.jpg" alt="pills">
-            <div class="card-body">
-                <h5>Ambroxol 10mg</h5>
-                <button class="prodInfo">i</button>
-                <button class="prodAdd">+</button>
-            </div>
-        </div>
-    </div>
-    <div class="pedidos">
-        <h2>Pedidos</h2>
-        <ul>
-            <li>
-                <div class="pedidoCard">
-                    <img src="/img/pills.jpg" alt="pills">
-                    <div>
-                        <span>Ibuprofeno 50mg</span>
-                        <span>
-                            <label for="cantped1">Cantidad: </label>
-                            <input type="number" name="cantped1" id="cantped1" value="10">
-                        </span>
-                        <span>Monto: S/. 150.00</span>
-                        <span>
-                            <button id="elimprod1">X</button>
-                        </span>
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col col-md-3 gy-2">
+                <h2>Filtros</h2>
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 align-items-center">
+                            <div class="col-4 col-md">
+                                <label for="nombre" class="offset-1 offset-md-0 col-form-label">Nombre Producto</label>
+                            </div>
+                            <div class="col-8 col-md">
+                                <input type="text" class="form-control" id="nombre" placeholder="Digite el nombre...">
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 align-items-center">
+                            <div class="col-4 col-md">
+                                <label for="composicion" class="offset-1 offset-md-0 col-form-label">Composición</label>
+                            </div>
+                            <div class="col-8 col-md">
+                                <input type="text" class="form-control" id="composicion" placeholder="Digite la composición...">
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 align-items-center">
+                            <div class="col-4 col-md">
+                                <label for="presentacion" class="offset-1 offset-md-0 col-form-label">Presentación</label>
+                            </div>
+                            <div class="col-8 col-md">
+                                <input type="text" class="form-control" id="presentacion" placeholder="Digite la presentación...">
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col text-end">
+                        <button class="btn btn-primary" id="filtrarProds">Filtrar</button>
                     </div>
                 </div>
-            </li>
-            <hr>
-            <li>
-                <div class="pedidoCard">
-                    <img src="/img/pills.jpg" alt="pills">
-                    <div>
-                        <span>Paracetamol 25mg</span>
-                        <span>
-                            <label for="cantped2">Cantidad: </label>
-                            <input type="number" name="cantped2" id="cantped2" value="20">
-                        </span>
-                        <span>Monto: S/. 400.00</span>
-                        <span>
-                            <button id="elimprod2">X</button>
-                        </span>
+            </div>
+            <div class="col col-md-5 gy-2">
+                <h2>Productos</h2>
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-2 row-cols-xl-3 g-2">
+                    <% for (let prod of prods) { %>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= prod.nombreProducto %></h5>
+                                <h6 class="card-subtitle text-muted mb-2"><%= prod.composicion %></h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="card-text overflow-auto"><%= prod.nombrePresentacion %><br>Stock: 13</span>
+                                    <span>
+                                        <button class="btn btn-sm btn-success" id="addToCart"><strong>+</strong></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="col col-md-4 gy-2 mb-3">
+                <h2>R. de compras</h2>
+                <hr>
+                <!-- Items -->
+                <h5>Items</h5>
+                <div class="row row-cols-1 gy-2">
+                    <div class="col">
+                        <!-- Item 1 -->
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>
+                                    <h5 class="card-title mt-1">Eutirox</h5>
+                                    <h6 class="card-subtitle text-muted mb-2">50 ug</h6>                                
+                                </span>
+                                <span>
+                                    <button class="btn btn-danger" id="addToCart"><strong>X</strong></button>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Presentación: Caja</p>
+                                <hr>
+                                <div class="row row-cols-1 g-2">
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="lote" class="offset-1 offset-md-0 col-form-label">Lote Producto</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="text" class="form-control form-control-sm" id="lote" placeholder="Digite el lote del producto...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="fechavenc" class="offset-1 offset-md-0 col-form-label">Fecha Venc.</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="text" class="form-control form-control-sm" id="fechavenc" placeholder="Digite la fecha de vencimiento...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="stock" class="offset-1 offset-md-0 col-form-label">Inventario (Stock)</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="number" class="form-control form-control-sm" id="stock" placeholder="Digite el stock del lote..." min="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="costolote" class="offset-1 offset-md-0 col-form-label">Costo (S/. )</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="number" class="form-control form-control-sm" id="costolote" placeholder="Digite el costo del lote..." min="0" step="0.01">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Item 2 -->
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>
+                                    <h5 class="card-title mt-1">Eutirox</h5>
+                                    <h6 class="card-subtitle text-muted mb-2">50 ug</h6>                                
+                                </span>
+                                <span>
+                                    <button class="btn btn-danger" id="addToCart"><strong>X</strong></button>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Presentación: Caja</p>
+                                <hr>
+                                <div class="row row-cols-1 g-2">
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="lote" class="offset-1 offset-md-0 col-form-label">Lote Producto</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="text" class="form-control form-control-sm" id="lote" placeholder="Digite el lote del producto...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="fechavenc" class="offset-1 offset-md-0 col-form-label">Fecha Venc.</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="text" class="form-control form-control-sm" id="fechavenc" placeholder="Digite la fecha de vencimiento...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="stock" class="offset-1 offset-md-0 col-form-label">Inventario (Stock)</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="number" class="form-control form-control-sm" id="stock" placeholder="Digite el stock del lote..." min="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="costolote" class="offset-1 offset-md-0 col-form-label">Costo (S/. )</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="number" class="form-control form-control-sm" id="costolote" placeholder="Digite el costo del lote..." min="0" step="0.01">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Item 3 -->
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>
+                                    <h5 class="card-title mt-1">Eutirox</h5>
+                                    <h6 class="card-subtitle text-muted mb-2">50 ug</h6>                                
+                                </span>
+                                <span>
+                                    <button class="btn btn-danger" id="addToCart"><strong>X</strong></button>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Presentación: Caja</p>
+                                <hr>
+                                <div class="row row-cols-1 g-2">
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="lote" class="offset-1 offset-md-0 col-form-label">Lote Producto</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="text" class="form-control form-control-sm" id="lote" placeholder="Digite el lote del producto...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="fechavenc" class="offset-1 offset-md-0 col-form-label">Fecha Venc.</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="text" class="form-control form-control-sm" id="fechavenc" placeholder="Digite la fecha de vencimiento...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="stock" class="offset-1 offset-md-0 col-form-label">Inventario (Stock)</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="number" class="form-control form-control-sm" id="stock" placeholder="Digite el stock del lote..." min="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                            <div class="col-4 col-md col-xl-4">
+                                                <label for="costolote" class="offset-1 offset-md-0 col-form-label">Costo (S/. )</label>
+                                            </div>
+                                            <div class="col-8 col-md col-xl-8">
+                                                <input type="number" class="form-control form-control-sm" id="costolote" placeholder="Digite el costo del lote..." min="0" step="0.01">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </li>
-            <hr>
-            <li>
-                <div class="pedidoCard">
-                    <img src="/img/pills.jpg" alt="pills">
-                    <div>
-                        <span>Eutirox 50ug</span>
-                        <span>
-                            <label for="cantped3">Cantidad: </label>
-                            <input type="number" name="cantped3" id="cantped3" value="15">
-                        </span>
-                        <span>Monto: S/. 450.00</span>
-                        <span>
-                            <button id="elimprod3">X</button>
-                        </span>
+                <hr>
+                <!-- Sección de compra general -->
+                <h5>Info. de compra</h5>
+                <div class="row row-cols-1 gy-2">
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                            <div class="col-4 col-md col-xl-4">
+                                <label for="numserie" class="offset-1 offset-md-0 col-form-label">Nro. serie</label>
+                            </div>
+                            <div class="col-8 col-md col-xl-8">
+                                <input type="text" class="form-control form-control-sm" id="numserie" placeholder="Digite el numero de serie...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                            <div class="col-4 col-md col-xl-4">
+                                <label for="numfactura" class="offset-1 offset-md-0 col-form-label">Nro. factura</label>
+                            </div>
+                            <div class="col-8 col-md col-xl-8">
+                                <input type="text" class="form-control form-control-sm" id="numfactura" placeholder="Digite el numero de la factura...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                            <div class="col-4 col-md col-xl-4">
+                                <label for="fechacompra" class="offset-1 offset-md-0 col-form-label">Fecha compra</label>
+                            </div>
+                            <div class="col-8 col-md col-xl-8">
+                                <input type="text" class="form-control form-control-sm" id="fechacompra" placeholder="Digite la fecha de compra...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                            <div class="col-4 col-md col-xl-4">
+                                <label for="subtotal" class="offset-1 offset-md-0 col-form-label">Subtotal (S/. )</label>
+                            </div>
+                            <div class="col-8 col-md col-xl-8">
+                                <input type="number" class="form-control form-control-sm" id="subtotal" placeholder="Digite el subtotal..." min="0" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                            <div class="col-4 col-md col-xl-4">
+                                <label for="igv" class="offset-1 offset-md-0 col-form-label">IGV (S/. )</label>
+                            </div>
+                            <div class="col-8 col-md col-xl-8">
+                                <input type="number" class="form-control form-control-sm" id="igv" placeholder="Digite el igv..." min="0" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                            <div class="col-4 col-md col-xl-4">
+                                <label for="total" class="offset-1 offset-md-0 col-form-label">Total (S/. )</label>
+                            </div>
+                            <div class="col-8 col-md col-xl-8">
+                                <input type="number" class="form-control form-control-sm" id="total" placeholder="Digite el total..." min="0" step="0.01">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </li>
-        </ul>
-        <div class="montos">
-            <span>Subtotal</span>
-            <span>S/. 1312.00</span>
+                <hr>
+                <div class="actions text-end">
+                    <button class="btn btn-success" id="filtrarProds">Proceder</button>
+                </div>
+            </div>
         </div>
-        <div class="montos">
-            <span>IGV</span>
-            <span>S/. 288.00</span>
-        </div>
-        <div class="montos">
-            <span>Total</span>
-            <span>S/. 1600.00</span>
-        </div>
-        <button id="realizarcompra">Proceder</button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 </html>
