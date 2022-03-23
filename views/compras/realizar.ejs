@@ -61,7 +61,7 @@
                                 <h5 class="card-title"><%= prod.nombreProducto %></h5>
                                 <h6 class="card-subtitle text-muted mb-2"><%= prod.composicion %></h6>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="card-text overflow-auto"><%= prod.nombrePresentacion %><br>Stock: 13</span>
+                                    <span class="card-text overflow-auto"><%= prod.nombrePresentacion %><br>Stock: <%= prod.stock %></span>
                                     <span>
                                         <button class="btn btn-sm btn-success" id="addToCart"><strong>+</strong></button>
                                     </span>
