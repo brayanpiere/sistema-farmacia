@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>ESTA ES LA LISTA DE EMPLEADOS</h1>
+    <a href="/empleados/add_empleado">Agregar Empleado</a>
+    <table>
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>idEmpleado</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Salario</th>
+                <th>Estado</th>
+                <th>idCargo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let c=0 %>
+                <% empleados.forEach((emp)=> { %>
+                    <% c++ %>
+                        <tr>
+                            <td>
+                                <%= c %>
+                            </td>
+                            <td>
+                                <%= emp.id %>
+                            </td>
+                            <td>
+                                <%= emp.nombres %>
+                            </td>
+                            <td>
+                                <%= emp.apellidos %>
+                            </td>
+                            <td>
+                                <%= emp.dni %>
+                            </td>
+                            <td>
+                                <%= emp.telefono %>
+                            </td>
+                            <td>
+                                <%= emp.email %>
+                            </td>
+                            <td>
+                                <%= emp.salario %>
+                            </td>
+                            <td>
+                                <%= emp.estado %>
+                            </td>
+                            <td>
+                                <%= emp.idCargo %>
+                            </td>
+                            <td>
+                                <a href="/empleados/edit_empleado/<%= emp.id %>">Modificar</a>
+                                <a href="/empleados/delete_empleado/<%= emp.id %>">Eliminar</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>
