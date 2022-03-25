@@ -39,7 +39,7 @@
                                                 <tr>
                                                     <th scope="row">
                                                         <%= c %>
-                                                            </td>
+                                                    </th>
                                                     <td>
                                                         <%= car.id %>
                                                     </td>
@@ -47,9 +47,10 @@
                                                         <%= car.cargo[0].toUpperCase() + '' + car.cargo.slice(1) %>
                                                     </td>
                                                     <td class="d-flex justify-content-center justify-content-xs-end">
-                                                        <a class="btn btn-warning me-1"
-                                                            href="/cargos/edit_cargo/<%= car.id %>">Modificar</a>
-                                                        <a class="btn btn-danger ms-1"
+                                                        <!-- <a class="btn btn-warning me-1 modificar"
+                                                            href="/cargos/edit_cargo/<%= car.id %>">Modificar</a> -->
+                                                        <button class="btn btn-warning me-1 modificar">Modificar</button>
+                                                        <a class="btn btn-danger ms-1 eliminar"
                                                             href="/cargos/delete_cargo/<%= car.id %>">Eliminar</a>
                                                     </td>
                                                 </tr>
