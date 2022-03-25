@@ -8,13 +8,6 @@ const renderListar = async (req, res) => {
     // const listaCargos =[];
     sql='SELECT * FROM public."Cargo" ORDER BY "idCargo" ASC ';
     let result = await BD.open(sql);
-    // result.rows.map(emp=>{
-    //     let cargoSchema = {
-    //         'id': emp.idCargo,
-    //         'cargo':emp.nombreCargo,
-    //     }
-    //     listaCargos.push(cargoSchema)
-    // });
     const listaCargos = result.rows.map(emp => ({
         'id': emp.idCargo,
         'cargo': emp.nombreCargo
