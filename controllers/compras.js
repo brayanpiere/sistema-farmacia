@@ -6,17 +6,28 @@ const renderIndex = (req, res) => {
 }
 
 const renderRealizar = async (req, res) => {
-    const sql = 'select p."nombreProducto", p."composicion", pre."nombrePresentacion", lot."stock" \
-    from "Producto" p, "Presentacion" pre, "LoteProducto" lot \
-    where p."idPresentacion" = pre."idPresentacion" \
-    and lot."idProducto" = p."idProducto" \
-    and lot."estado" = \'Activo\''
+    // Productos
+    const query1 = {
+        text: 'select p."idProducto", p."nombreProducto", p."composicion", pre."idPresentacion", pre."nombrePresentacion", lot."stock" \
+        from "Producto" p, "Presentacion" pre, "LoteProducto" lot \
+        where p."idPresentacion" = pre."idPresentacion" \
+        and lot."idProducto" = p."idProducto" \
+        and lot."estado" = $1',
+        values: ['Activo']
+    }
 
-    // rows forma parte del result de la consulta sql
-    // const result = await BD.open(sql)
-    const { rows } = await BD.open(sql)
+    // Proveedores
+    const query2 = {
+        text: 'select pro."idProveedor", pro."nombres" \
+        from "Proveedor" pro \
+        where pro."estado" = $1',
+        values: ['Activo']
+    }
+
+    const productos = await BD.open(query1)
+    const proveedores = await BD.open(query2)
     // console.log(rows);
-    res.render("compras/realizar", { prods: rows });
+    res.render("compras/realizar", { prods: productos.rows, provs: proveedores.rows });
 }
 
 module.exports = { renderIndex, renderRealizar }
