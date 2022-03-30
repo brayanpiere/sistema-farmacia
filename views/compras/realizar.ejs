@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col col-md-5 gy-2">
-                <div class="row row-cols-1 gx-2">
+                <div class="row row-cols-1 gx-2 row-productos">
                     <div class="col">
                         <h2 class="pb-1">Productos</h2>
                     </div>
@@ -66,7 +66,7 @@
                                         <h6 class="card-subtitle text-muted mb-2 card-comp"><%= prod.composicion %></h6>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <!-- <span class="card-text overflow-auto card-pre"><%= prod.nombrePresentacion %><br>Stock: <%= prod.stock %></span> -->
-                                            <span class="card-text overflow-auto card-pre">
+                                            <span class="card-text overflow-auto">
                                                 <span class="card-pre"><%= prod.nombrePresentacion %></span>
                                                 <br>
                                                 <span>Stock: <%= prod.stock %></span>
@@ -88,274 +88,95 @@
             <div class="col col-md-4 gy-2 mb-3">
                 <h2>R. de compras</h2>
                 <hr>
-                <!-- Items -->
-                <h5 class="pb-1">Items</h5>
-                <div class="row row-cols-1 g-2 overflow-auto items" style="height: 80vh;">
-                    <div class="col">
-                        <!-- Item 1 -->
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>
-                                    <h5 class="card-title mt-1">Eutirox</h5>
-                                    <h6 class="card-subtitle text-muted mb-2">50 ug</h6>                                
-                                </span>
-                                <span>
-                                    <button class="btn btn-danger" id="addToCart"><strong>X</strong></button>
-                                </span>
+                <form action="/compras" method="post">
+                    <!-- Items -->
+                    <h5 class="pb-1">Items</h5>
+                    <div class="row row-cols-1 g-2 overflow-auto lista-items" style="height: 80vh;"></div>
+                    <hr>
+                    <!-- Sección de compra general -->
+                    <h5>Info. de compra</h5>
+                    <div class="row row-cols-1 gy-2">
+                        <div class="col">
+                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                <div class="col-4 col-md col-xl-4">
+                                    <label for="numserie" class="offset-1 offset-md-0 col-form-label">Nro. serie</label>
+                                </div>
+                                <div class="col-8 col-md col-xl-8">
+                                    <input type="text" name="numserie" class="form-control form-control-sm" id="numserie" placeholder="Digite el numero de serie...">
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p class="card-text">Presentación: Caja</p>
-                                <hr>
-                                <div class="row row-cols-1 g-2">
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="lote" class="offset-1 offset-md-0 col-form-label">Lote Producto</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="text" class="form-control form-control-sm" id="lote" placeholder="Digite el lote del producto...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="fechavenc" class="offset-1 offset-md-0 col-form-label">Fecha Venc.</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="text" class="form-control form-control-sm" id="fechavenc" placeholder="Digite la fecha de vencimiento...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="stock" class="offset-1 offset-md-0 col-form-label">Inventario (Stock)</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="number" class="form-control form-control-sm" id="stock" placeholder="Digite el stock del lote..." min="0">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="costolote" class="offset-1 offset-md-0 col-form-label">Costo (S/. )</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="number" class="form-control form-control-sm" id="costolote" placeholder="Digite el costo del lote..." min="0" step="0.01">
-                                            </div>
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="col">
+                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                <div class="col-4 col-md col-xl-4">
+                                    <label for="numfactura" class="offset-1 offset-md-0 col-form-label">Nro. factura</label>
+                                </div>
+                                <div class="col-8 col-md col-xl-8">
+                                    <input type="text" name="numfactura" class="form-control form-control-sm" id="numfactura" placeholder="Digite el numero de la factura...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                <div class="col-4 col-md col-xl-4">
+                                    <label for="proveedor" class="offset-1 offset-md-0 col-form-label">Proveedor</label>
+                                </div>
+                                <div class="col-8 col-md col-xl-8">
+                                    <select id="proveedor" name="proveedor" class="form-select form-select-sm">
+                                        <option selected>Selecciona una opcion...</option>
+                                        <% for (let prov of provs ) { %> 
+                                        <option value="<%= prov.idProveedor %>"><%= prov.nombres %></option>
+                                        <% } %> 
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                <div class="col-4 col-md col-xl-4">
+                                    <label for="fechacompra" class="offset-1 offset-md-0 col-form-label">Fecha compra</label>
+                                </div>
+                                <div class="col-8 col-md col-xl-8">
+                                    <input type="text" name="fechacompra" class="form-control form-control-sm" id="fechacompra" placeholder="Digite la fecha de compra...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                <div class="col-4 col-md col-xl-4">
+                                    <label for="subtotal" class="offset-1 offset-md-0 col-form-label">Subtotal (S/. )</label>
+                                </div>
+                                <div class="col-8 col-md col-xl-8">
+                                    <input type="number" name="subtotal" class="form-control form-control-sm" id="subtotal" placeholder="Digite el subtotal..." min="0" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                <div class="col-4 col-md col-xl-4">
+                                    <label for="igv" class="offset-1 offset-md-0 col-form-label">IGV (S/. )</label>
+                                </div>
+                                <div class="col-8 col-md col-xl-8">
+                                    <input type="number" name="igv" class="form-control form-control-sm" id="igv" placeholder="Digite el igv..." min="0" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
+                                <div class="col-4 col-md col-xl-4">
+                                    <label for="total" class="offset-1 offset-md-0 col-form-label">Total (S/. )</label>
+                                </div>
+                                <div class="col-8 col-md col-xl-8">
+                                    <input type="number" name="total" class="form-control form-control-sm" id="total" placeholder="Digite el total..." min="0" step="0.01">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <!-- Item 2 -->
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>
-                                    <h5 class="card-title mt-1">Eutirox</h5>
-                                    <h6 class="card-subtitle text-muted mb-2">50 ug</h6>                                
-                                </span>
-                                <span>
-                                    <button class="btn btn-danger" id="addToCart"><strong>X</strong></button>
-                                </span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Presentación: Caja</p>
-                                <hr>
-                                <div class="row row-cols-1 g-2">
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="lote" class="offset-1 offset-md-0 col-form-label">Lote Producto</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="text" class="form-control form-control-sm" id="lote" placeholder="Digite el lote del producto...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="fechavenc" class="offset-1 offset-md-0 col-form-label">Fecha Venc.</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="text" class="form-control form-control-sm" id="fechavenc" placeholder="Digite la fecha de vencimiento...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="stock" class="offset-1 offset-md-0 col-form-label">Inventario (Stock)</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="number" class="form-control form-control-sm" id="stock" placeholder="Digite el stock del lote..." min="0">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="costolote" class="offset-1 offset-md-0 col-form-label">Costo (S/. )</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="number" class="form-control form-control-sm" id="costolote" placeholder="Digite el costo del lote..." min="0" step="0.01">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <hr>
+                    <div class="actions text-end">
+                        <button class="btn btn-success" id="filtrarProds">Proceder</button>
                     </div>
-                    <div class="col">
-                        <!-- Item 3 -->
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>
-                                    <h5 class="card-title mt-1">Eutirox</h5>
-                                    <h6 class="card-subtitle text-muted mb-2">50 ug</h6>                                
-                                </span>
-                                <span>
-                                    <button class="btn btn-danger" id="addToCart"><strong>X</strong></button>
-                                </span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Presentación: Caja</p>
-                                <hr>
-                                <div class="row row-cols-1 g-2">
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="lote" class="offset-1 offset-md-0 col-form-label">Lote Producto</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="text" class="form-control form-control-sm" id="lote" placeholder="Digite el lote del producto...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="fechavenc" class="offset-1 offset-md-0 col-form-label">Fecha Venc.</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="text" class="form-control form-control-sm" id="fechavenc" placeholder="Digite la fecha de vencimiento...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="stock" class="offset-1 offset-md-0 col-form-label">Inventario (Stock)</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="number" class="form-control form-control-sm" id="stock" placeholder="Digite el stock del lote..." min="0">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                            <div class="col-4 col-md col-xl-4">
-                                                <label for="costolote" class="offset-1 offset-md-0 col-form-label">Costo (S/. )</label>
-                                            </div>
-                                            <div class="col-8 col-md col-xl-8">
-                                                <input type="number" class="form-control form-control-sm" id="costolote" placeholder="Digite el costo del lote..." min="0" step="0.01">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <!-- Sección de compra general -->
-                <h5>Info. de compra</h5>
-                <div class="row row-cols-1 gy-2">
-                    <div class="col">
-                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                            <div class="col-4 col-md col-xl-4">
-                                <label for="numserie" class="offset-1 offset-md-0 col-form-label">Nro. serie</label>
-                            </div>
-                            <div class="col-8 col-md col-xl-8">
-                                <input type="text" class="form-control form-control-sm" id="numserie" placeholder="Digite el numero de serie...">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                            <div class="col-4 col-md col-xl-4">
-                                <label for="numfactura" class="offset-1 offset-md-0 col-form-label">Nro. factura</label>
-                            </div>
-                            <div class="col-8 col-md col-xl-8">
-                                <input type="text" class="form-control form-control-sm" id="numfactura" placeholder="Digite el numero de la factura...">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                            <div class="col-4 col-md col-xl-4">
-                                <label for="proveedor" class="offset-1 offset-md-0 col-form-label">Proveedor</label>
-                            </div>
-                            <div class="col-8 col-md col-xl-8">
-                                <select id="proveedor" class="form-select form-select-sm">
-                                    <option selected>Selecciona una opcion...</option>
-                                    <% for (let prov of provs ) { %> 
-                                    <option value="<%= prov.idProveedor %>"><%= prov.nombres %></option>
-                                    <% } %> 
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                            <div class="col-4 col-md col-xl-4">
-                                <label for="fechacompra" class="offset-1 offset-md-0 col-form-label">Fecha compra</label>
-                            </div>
-                            <div class="col-8 col-md col-xl-8">
-                                <input type="text" class="form-control form-control-sm" id="fechacompra" placeholder="Digite la fecha de compra...">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                            <div class="col-4 col-md col-xl-4">
-                                <label for="subtotal" class="offset-1 offset-md-0 col-form-label">Subtotal (S/. )</label>
-                            </div>
-                            <div class="col-8 col-md col-xl-8">
-                                <input type="number" class="form-control form-control-sm" id="subtotal" placeholder="Digite el subtotal..." min="0" step="0.01">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                            <div class="col-4 col-md col-xl-4">
-                                <label for="igv" class="offset-1 offset-md-0 col-form-label">IGV (S/. )</label>
-                            </div>
-                            <div class="col-8 col-md col-xl-8">
-                                <input type="number" class="form-control form-control-sm" id="igv" placeholder="Digite el igv..." min="0" step="0.01">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                            <div class="col-4 col-md col-xl-4">
-                                <label for="total" class="offset-1 offset-md-0 col-form-label">Total (S/. )</label>
-                            </div>
-                            <div class="col-8 col-md col-xl-8">
-                                <input type="number" class="form-control form-control-sm" id="total" placeholder="Digite el total..." min="0" step="0.01">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="actions text-end">
-                    <button class="btn btn-success" id="filtrarProds">Proceder</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
