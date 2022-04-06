@@ -26,7 +26,8 @@ const renderAdd = (req, res) => {
 const renderAddCargo = async (req, res) => {
     let cod=req.body.cod;
     let cargo=req.body.cargo;
-    sql=`INSERT INTO public."Cargo"("idCargo", "nombreCargo") VALUES (${cod}, '${cargo}');`;
+    //sql=`INSERT INTO public."Cargo"("idCargo", "nombreCargo") VALUES (${cod}, '${cargo}');`;
+    sql=`CALL add_cargo('${cargo}');`;
     let result = await BD.open(sql);
     res.redirect('/cargos/listar');
 }

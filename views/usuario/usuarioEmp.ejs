@@ -15,27 +15,31 @@
     <div class="container-sm">
         <div class="row row-cols-1 gy-2">
             <div class="col">
-                <h1>ESTA ES LA LISTA DE SUCURSALES</h1>
-                <a class="btn btn-outline-success" href="#" id="btn-addSucursal">Agregar Sucursal</a>
+                <h1>ESTA ES LA LISTA DE USUARIOS</h1>
+                <h2>ID EMPLEADO :  <%= empleado.id %></h2>
+                <h2>NOMBRE :  <%= empleado.nombres %> <%= empleado.apellidos %></h2>
+                <h2>CARGO :  <%= empleado.idCargo %></h2>
+                <a class="btn btn-outline-success" href="#" id="btn-addUsuarioEmp">Agregar Usuario</a>
             </div>
             <div class="col">
                 <div class="row row-cols-1 row-cols-md-3 justify-content-center">
-                    <div class="col col-md-10 col-lg-8 col-xl-6">
+                    <div class="col col-md-10 col-lg-8 col-xl-12">
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover align-middle text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">N°</th>
                                         <th scope="col">Codigo</th>
-                                        <th scope="col">Alias</th>
-                                        <th scope="col">Ciudad</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">ID Empleado</th>
+                                        <th scope="col">ID Sucursal</th>
                                         <th scope="col">Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% let c=0 %>
                                         <!-- Sintaxis ES6 -->
-                                        <% for (let car of sucursales) { %>
+                                        <% for (let car of usuarios) { %>
                                             <% c++ %>
                                                 <tr>
                                                     <th scope="row">
@@ -45,10 +49,13 @@
                                                         <%= car.id %>
                                                     </td>
                                                     <td>
-                                                        <%= car.alias %>
+                                                        <%= car.pass %>
                                                     </td>
                                                     <td>
-                                                        <%= car.ciudad %>
+                                                        <%= car.idEmp %>
+                                                    </td>
+                                                    <td>
+                                                        <%= car.idSuc %>
                                                     </td>
                                                     <td>
                                                         <%= car.estado %>
@@ -78,29 +85,41 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
         crossorigin="anonymous"></script>
-    <script src="/js/sucursal.js"></script>
+    <script src="/js/usuarioEmp.js"></script>
 </body>
+
 <!-- modal para agregar un nuevo cargo -->
-<div class="modal face" id="modal_addSucursal" tabindex="-1">
+<div class="modal face" id="modal_addUsuarioEmp" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="titulo-mb" class="modal-title">Agregar un Sucursal</h5>
+                <h5 id="titulo-mb" class="modal-title">Agregar Usuario</h5>
             </div>
             <div class="modal-body">
-                <form action="/sucursales/add_Sucursal" method="post">
+                <form action="/usuarios/add_UsuarioEmp" method="post">
                     <div class="mb-3">
-                        <label for="idSucursal" class="form-label">Id Sucursal</label>
-                        <input type="text" class="form-control" id="idSucursal" name="cod">
-                        <div id="idSucursalHelp" class="form-text">El id se generará de forma automatica.</div>
+                        <label for="idUsuario" class="form-label">Codigo</label>
+                        <input type="text" class="form-control" id="idUsuario" name="cod">
+                        <div id="idUsuarioHelp" class="form-text">El id se generará de forma automatica.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="aliasSucursal" class="form-label">Alias Sucursal</label>
-                        <input type="text" class="form-control" id="aliasSucursal" name="alias">
+                        <label for="pass" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="pass" name="pass">
                     </div>
                     <div class="mb-3">
-                        <label for="aliasCiudad" class="form-label">Ciudad</label>
-                        <input type="text" class="form-control" id="aliasCiudad" name="ciudad">
+                        <label for="idEmpleado" class="form-label">ID Empleado</label>
+                        <input type="text" class="form-control" id="idEmpleado" name="idEmpleado" value="<%= empleado.id %>">
+                    </div>
+                    <div class="mb-1">
+                        <label for="idSucursal" class="form-label">Sucursal</label>
+                        <select class="form-select" name="idSucursal" id="idSucursal">
+                            <option value="-1">Seleccione Sucursal</option>
+                            <% sucursales.forEach((s)=> { %>
+                                <option value="<%= s.id %>">
+                                    <%= s.alias %> / <%= s.ciudad %>
+                                </option>
+                                <% }) %>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Agregar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -109,29 +128,41 @@
         </div>
     </div>
 </div>
+
 <!-- modal para modificar un cargo -->
-<div class="modal face" id="modal_EditSucursal" tabindex="-1">
+<div class="modal face" id="modal_EditUsuarioEmp" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="titulo-mb" class="modal-title">Mofificar Sucursal</h5>
+                <h5 id="titulo-mb" class="modal-title">Mofificar Usuario</h5>
             </div>
             <div class="modal-body">
-                <form action="/sucursales/edit_Sucursal" method="post">
+                <form action="/usuarios/edit_UsuarioEmp" method="post">
                     <div class="mb-3">
-                        <label for="idSucursal" class="form-label">Id Sucursal</label>
-                        <input type="text" class="form-control" id="idSucursal-m" name="cod">
-                        <div id="idSucursalHelp" class="form-text">El id se generará de forma automatica.</div>
+                        <label for="idUsuario" class="form-label">Codigo</label>
+                        <input type="text" class="form-control" id="idUsuario-m" name="cod">
+                        <div id="idUsuarioHelp" class="form-text">El id se generará de forma automatica.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="aliasSucursal" class="form-label">Alias Sucursal</label>
-                        <input type="text" class="form-control" id="aliasSucursal-m" name="alias">
+                        <label for="pass" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="pass-m" name="pass">
                     </div>
                     <div class="mb-3">
-                        <label for="aliasCiudad" class="form-label">Ciudad</label>
-                        <input type="text" class="form-control" id="ciudad-m" name="ciudad">
+                        <label for="idEmpleado" class="form-label">ID Empleado</label>
+                        <input type="text" class="form-control" id="idEmpleado" name="idEmpleado" value="<%= empleado.id %>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Agregar</button>
+                    <div class="mb-1">
+                        <label for="idSucursal" class="form-label">Sucursal</label>
+                        <select class="form-select" name="idSucursal" id="idSucursal-m">
+                            <option value="-1">Seleccione Sucursal</option>
+                            <% sucursales.forEach((s)=> { %>
+                                <option value="<%= s.id %>">
+                                    <%= s.alias %> / <%= s.ciudad %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </form>
             </div>

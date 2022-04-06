@@ -8,6 +8,7 @@ const comprasRoutes = require('../routes/compras')
 const cargosRoutes = require('../routes/cargo')
 const EmpleadosRoutes = require('../routes/empleado')
 const SucursalesRoutes = require('../routes/sucursal')
+const UsuariosRoutes = require('../routes/usuario')
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
@@ -27,6 +28,7 @@ app.use('/compras', comprasRoutes)
 app.use('/cargos', cargosRoutes)
 app.use('/empleados', EmpleadosRoutes)
 app.use('/sucursales', SucursalesRoutes)
+app.use('/usuarios', UsuariosRoutes)
 // NOTA:
 // Si tuvieramos que definir aquí una ruta, cuya sintaxis posee un parametro, ej:
 // /productos/:id/

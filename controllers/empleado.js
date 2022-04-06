@@ -25,7 +25,6 @@ const renderListar = async (req, res) => {
         'id': emp.idCargo,
         'cargo': emp.nombreCargo
     }));
-    console.log(listaCargos);
     res.render("empleado/empleado",{
         empleados : listaEmpleados,
         cargos : listaCargos, 
@@ -55,14 +54,6 @@ const renderUpdateEmpleado = async (req, res) => {
     let email=req.body.email;
     let salario=req.body.salario;
     let idcargo=req.body.idcargo;
-    console.log(cod);
-    console.log(nombre);
-    console.log(apellidos);
-    console.log(dni);
-    console.log(telefono);
-    console.log(email);
-    console.log(salario);
-    console.log(idcargo);
     
     sql=`UPDATE public."Empleado" SET nombres='${nombre}', apellidos='${apellidos}', dni=${dni}, telefono='${telefono}', email='${email}', salario=${salario}, "idCargo"=${idcargo}	WHERE "idEmpleado"=${cod};`;
     let result = await BD.open(sql);
