@@ -56,6 +56,8 @@ const renderUPdate = async (req, res) => {
 const renderUpdateCargo = async (req, res) => {
     let cod=req.body.cod;
     let cargo=req.body.cargo;
+    console.log(cod);
+    console.log(cargo);
     sql=`UPDATE public."Cargo" SET "nombreCargo"='${cargo}' WHERE "idCargo"=${cod};`;
     let result = await BD.open(sql);
     res.redirect('/cargos/listar');

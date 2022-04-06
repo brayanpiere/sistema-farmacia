@@ -74,10 +74,9 @@
                                                         <%= emp.idCargo %>
                                                     </td>
                                                     <td class="d-flex justify-content-center justify-content-xs-end">
-                                                        <a class="btn btn-warning me-1"
-                                                            href="/empleados/edit_empleado/<%= emp.id %>">Modificar</a>
+                                                        <button class="btn btn-warning me-1 modificar">Modificar</button>
                                                         <a class="btn btn-danger ms-1"
-                                                            href="/empleados/delete_empleado/<%= emp.id %>">Eliminar</a>
+                                                            href="/empleados/delete_empleado/<%= emp.id %>">Inhabilitar</a>
                                                     </td>
                                                 </tr>
                                                 <% } %>
@@ -106,7 +105,7 @@
                 <h5 id="titulo-mb" class="modal-title">Agregar un Empleado</h5>
             </div>
             <div class="modal-body">
-                <form action="/cargos/add_cargo" method="post">
+                <form action="/empleados/add_Emp" method="post">
                     <div class="mb-1">
                         <label for="idEmp" class="form-label">Id Empleado</label>
                         <input type="text" class="form-control" id="idEmp" name="cod">
@@ -148,6 +147,64 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Agregar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para modificar un  empleado -->
+<div class="modal face" id="modal_EditEmp" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="titulo-mb" class="modal-title">Modificar Empleado</h5>
+            </div>
+            <div class="modal-body">
+                <form action="/empleados/edit_Emp" method="post">
+                    <div class="mb-1">
+                        <label for="idEmp" class="form-label">Id Empleado</label>
+                        <input type="text" class="form-control" id="idEmp-m" name="cod">
+                        <div id="idEmpHelp" class="form-text">El id se generará de forma automatica.</div>
+                    </div>
+                    <div class="mb-1">
+                        <label for="nombreEmp" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="nombreEmp-m" name="nombre">
+                    </div>
+                    <div class="mb-1">
+                        <label for="apellidosEmp" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="apellidoEmp-m" name="apellidos">
+                    </div>
+                    <div class="mb-1">
+                        <label for="dni" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="dniEmp-m" name="dni">
+                    </div>
+                    <div class="mb-1">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="telefonoEmp-m" name="telefono">
+                    </div>
+                    <div class="mb-1">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="mail" class="form-control" id="emailEmp-m" name="email">
+                    </div>
+                    <div class="mb-1">
+                        <label for="salario" class="form-label">Salario</label>
+                        <input type="text" class="form-control" id="salarioEmp-m" name="salario">
+                    </div>
+                    <div class="mb-1">
+                        <label for="cargo" class="form-label">Cargo</label>
+                        <select class="form-select" name="idcargo" id="idcargoEmp-m">
+                            <option value="-1">Seleccione Cargo</option>
+                            <% cargos.forEach((s)=> { %>
+                                <option value="<%= s.id %>">
+                                    <%= s.cargo %>
+                                </option>
+                                <% }) %>
+                        </select>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </form>
             </div>
