@@ -11,6 +11,9 @@ const buttonsAdd = document.querySelectorAll('.addItem')
 const listaItems = document.querySelector('.lista-items')
 const garbage = []
 const whitespaces = { elements: [] }
+const tipoCompCol = document.getElementById('tipocompcol')
+const tipoComp = document.getElementById('tipocomp')
+const form = document.querySelector('form')
 
 const items = []
 
@@ -156,10 +159,9 @@ class Item {
         const actions = document.createElement('span')
         // Botón eliminar
         const btnEliminar = document.createElement('button')
-        btnEliminar.classList.add('btn', 'btn-danger', 'elimItem')
+        btnEliminar.classList.add('btn', 'btn-danger', 'fw-bold', 'elimItem')
         btnEliminar.id = 'eitem' + item.idProducto
         btnEliminar.type = 'button'
-        btnEliminar.style.fontWeight = 700
         btnEliminar.textContent = 'X'
         // Agregar listener a btnEliminar para poder eliminarlo del DOM
         btnEliminar.addEventListener('click', eliminarProducto)
@@ -179,6 +181,22 @@ class Item {
         const rejillaInfo = document.createElement('div')
         rejillaInfo.classList.add('row', 'row-cols-1', 'g-2')
         // LoteProducto infoCol
+        const idCol = crearCampo(
+            {
+                labelId: {
+                    name: 'id',
+                    id: item.idProducto
+                },
+                labelText: ''
+            },
+            {
+                type: 'number',
+                placeholder: '',
+                readonly: true,
+                value: +item.idProducto
+            }
+        )
+        idCol.style.display = 'none'
         const loteCol = crearCampo(
             {
                 labelId: {
@@ -201,6 +219,7 @@ class Item {
                 labelText: 'Fecha Venc.'
             },
             {
+                type: 'date',
                 placeholder: 'Digite la fecha de vencimiento...'
             }
         )
@@ -234,7 +253,7 @@ class Item {
             }
         )
         // Agregar info a la rejilla
-        rejillaInfo.append(loteCol, fechaVencCol, stockCol, costoCol)
+        rejillaInfo.append(idCol, loteCol, fechaVencCol, stockCol, costoCol)
         cardBody.append(cardText, hr, rejillaInfo)
         // Adherir la columna con la carta
         card.append(cardHeader, cardBody)
@@ -254,7 +273,7 @@ class Item {
     // }
 }
 
-const crearCampo = ({ labelId, labelText = '' }, { type = 'text', placeholder = '', min = 0, step = null }) => {
+const crearCampo = ({ labelId = { }, labelText = '' }, { type = 'text', placeholder = '', disabled = false, readonly = false, value = null, min = 0, step = null }) => {
     // Example
     // const infoCol = '<div class="col"> \
     //     <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center"> \
@@ -287,7 +306,7 @@ const crearCampo = ({ labelId, labelText = '' }, { type = 'text', placeholder = 
     // input
     const input = document.createElement('input')
     input.type = type
-    input.name = `items[${ labelId.id }][${ labelId.name }]`
+    input.name = labelId.id ? `items[${ labelId.id }][${ labelId.name }]` : labelId.name
     // console.log(type);
     if (type === 'number') {
         input.setAttribute('min', min)
@@ -296,12 +315,73 @@ const crearCampo = ({ labelId, labelText = '' }, { type = 'text', placeholder = 
     input.classList.add('form-control', 'form-control-sm')
     input.setAttribute('id', labelId.name + labelId.id)
     if (placeholder && placeholder.length > 0) input.placeholder = placeholder
+    if (disabled) input.disabled = true
+    if (readonly) input.readOnly = true
+    if (!!value) input.setAttribute('value', value)
     // Agregar los datos a una columna de info
     labelCol.appendChild(label)
     inputCol.appendChild(input)
     camposInfo.append(labelCol, inputCol)
     infoCol.appendChild(camposInfo)
     return infoCol
+}
+
+const displayCompCol = (e = null) => {
+    e && e.stopPropagation()
+    console.log(tipoCompCol.childNodes);
+    tipoCompCol.hasChildNodes() && removeChildNodes(tipoCompCol)
+    tipoCompCol.parentNode.style.display = 'block'
+    switch (tipoComp.value) {
+        case "1":
+            const dniCol = compColAppend('dni', 'DNI', 'Digite su DNI...', 'number')
+            tipoCompCol.appendChild(dniCol)
+            console.log('Basura: ');
+            console.log(garbage)
+            break;
+    
+        case "2":
+            const rucCol = compColAppend('ruc', 'RUC', 'Digite el RUC...', 'number')
+            const rsCol = compColAppend('razonsocial', 'Razón social', 'Digite la razón social...')
+            const nroSerieCol = compColAppend('nroserie', 'Nro. de serie', 'Digite el número de serie...', 'number')
+            const nroFacturaCol = compColAppend('nrofactura', 'Nro. de factura', 'Digite el número de factura...', 'number')
+            tipoCompCol.append(rucCol, rsCol, nroSerieCol, nroFacturaCol)
+            console.log('Basura: ');
+            console.log(garbage)
+            break;
+        
+        default:
+            tipoCompCol.parentNode.style.display = 'none'
+            console.log('Basura: ');
+            console.log(garbage)
+            break;
+    }
+}
+
+// Solo para crear campos para información de compras en general
+const compColAppend = (labelName = '', labelText = 'Texto de la etiqueta', placeholder = '', type = 'text') => {
+    const foundIndex = garbage.findIndex(el => el.id === labelName + 'Col')
+    if (foundIndex === -1) {
+        const infoCol = crearCampo(
+            {
+                labelId: {
+                    name: labelName,
+                    id: ''
+                },
+                labelText
+            },
+            {
+                type,
+                placeholder
+            }
+        )
+        infoCol.id = labelName + 'Col'
+        return infoCol
+    } else {
+        const foundInfoCol = garbage.splice(foundIndex, 1)[0]
+        console.log('Elemento encontrado: ')
+        console.log(foundInfoCol)
+        return foundInfoCol
+    }
 }
 
 // Funciones de mantenimiento de pagina
@@ -314,15 +394,12 @@ const created = (e) => {
     // Si no existe memoria local, asignar un array para guardar los items
     !localStorage.getItem('items') && localStorage.setItem('items', JSON.stringify(items))
     refreshItems()
+    displayCompCol()
 }
 
 const refreshItems = () => {
     const savedItems = JSON.parse(localStorage.getItem('items'))
     if (savedItems && savedItems.length > 0) items.push(...savedItems)
-    // if (savedItems && savedItems.length > 0) items = savedItems.slice()
-    // console.log(items);
-    // const items = localStorage.getItem('items')
-    // if (items && items.length > 0) {
     if (items && items.length > 0) {    
         for (const item of items) {
             const itemEl = new Item(item)
@@ -336,18 +413,17 @@ const refreshItems = () => {
 }
 
 const saveItemsInLocalMemory = () => localStorage.setItem('items', JSON.stringify(items))
+const removeItemsFromLocalMemory = () => localStorage.removeItem('items')
 
 const removeChildNodes = (DOMElement) => {
     while (DOMElement.firstChild) {
-        garbash.push(DOMElement.removeChild(DOMElement.firstChild))
+        garbage.push(DOMElement.removeChild(DOMElement.firstChild))
     }
 }
 
 const removeWhitespaceChilds = (DOMElement) => {
     const { childNodes } = DOMElement
-    // var foo = document.createTextNode("\x0A\u00A0\u00A0\u00A0\u00A0");
     Array.from(childNodes, cn => {
-        // if (cn.nodeName === '#text' || cn.nodeValue.includes('\x0A\u00A0\u00A0\u00A0')) {
         if (cn.nodeType === 3) {
             const whitespaceNode = DOMElement.removeChild(cn)
             whitespaces.elements.push(whitespaceNode)
@@ -360,27 +436,13 @@ const removeWhitespaceChilds = (DOMElement) => {
 filtrarProds.addEventListener('click', filtrarProductos)
 
 for (const but of buttonsAdd) {
-    but.style.fontWeight = 700
     but.addEventListener('click', agregarProducto)
 }
 
 window.addEventListener('DOMContentLoaded', created)
 
-// Anotaciones extra de codigo
+tipoComp.addEventListener('change', displayCompCol)
 
-// colprods[0].style.display = 'block'
-// const nomprodLike = '% || ' + nombre.value + ' || %'
-// const compLike = '% || ' + composicion.value + ' || %'
-// const preLike = '% || ' + presentacion.value + ' || %'
-
-// const query = {
-//     text: 'select p."nombreProducto", p."composicion", pre."nombrePresentacion", lot."stock" \
-//     from "Producto" p, "Presentacion" pre, "LoteProducto" lot \
-//     where p."idPresentacion" = pre."idPresentacion" \
-//     and lot."idProducto" = p."idProducto" \
-//     and lot."estado" = $1, \
-//     and p."nombreProducto" like $2, \
-//     and p."composicion" like $3, \
-//     and pre."nombrePresentacion" like $4',
-//     values: ['Activo', nomprodLike, compLike, preLike]
-// }
+form.addEventListener('submit', () => {
+    localStorage.removeItem('items')
+})

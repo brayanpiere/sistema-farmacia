@@ -5,158 +5,256 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="form">
-                <h2>Ventas</h2>
-                <form method="POST">
-                    <div class="form-control">
-                        <label for="tipocomp">Tipo de Comprobante: </label>
-                        <select id="tipocomp" name="tipocomp">
-                            <option value="boleta">Boleta</option>
-                            <option value="factura">Factura</option>
-                        </select>
-                    </div>
-                    <div class="form-control">
-                        <label for="dni">DNI: </label>
-                        <input type="text" name="dni" id="dni">
-                    </div>
-                    <!-- Se mostrará cuando se seleccione Factura en aquella opción -->
-                    <!-- To Do: implementarlo en ejs -->
-                    <!-- <div class="form-control">
-                        <label for="ruc">RUC: </label>
-                        <input type="text" name="ruc" id="ruc">
-                    </div>
-                    <div class="form-control">
-                        <label for="rsocial">Razon social: </label>
-                        <input type="text" name="rsocial" id="rsocial">
-                    </div> -->
-                    <div class="form-control">
-                        <div>
-                            <label for="prod">Producto: </label>
-                            <input type="text" name="prod" id="prod">
-                        </div>
-                        <div>
-                            <input type="radio" name="tipofarmaco" id="laboratorio">
-                            <label for="laboratorio">Laboratorio</label>
-                            <input type="radio" name="tipofarmaco" id="generico">
-                            <label for="generico">Genérico</label>                            
-                        </div>
-                        <div>
-                            <button id="buscarProd">Buscar</button>                            
+    <div class="container-lg">
+        <div class="row row-cols-1 row-cols-md-2 gy-2 gx-4">
+            <!-- Primera columna. Ventas -->
+            <div class="col col-md-6 my-3 mb-md-3">
+                <h4 class="text-center">Ventas</h4>
+                <div class="d-flex my-3 justify-content-around">
+                    <button id="esCliente" class="btn btn-dark fw-bold">Cliente</button>
+                    <button id="esVisitante" class="btn btn-dark fw-bold">Visitante</button>
+                </div>
+                <form action="/ventas" class="row row-cols-1 g-2" method="post">
+                    <div class="col">
+                        <div class="row row-cols-2 align-items-center">
+                            <div class="col-4">
+                                <label for="dni" class="offset-1 col-form-label">Tipo Comprobante</label>
+                            </div>
+                            <div class="col-8">
+                                <select class="form-select" id="tipocomp" name="tipocomp">
+                                    <option value="boleta">Boleta</option>
+                                    <option value="factura">Factura</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-control">
-                        <p>Presentación: </p>
-                        <input type="radio" name="present" id="caja">
-                        <label for="caja">Caja</label>
-                        <input type="radio" name="present" id="blister">
-                        <label for="blister">Blíster</label>
+                    <div class="col">
+                        <div class="row row-cols-2">
+                            <div class="col-4">
+                                <label for="dni" class="offset-1 col-form-label">DNI</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="dni" placeholder="Digite el DNI...">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-control">
-                        <label for="coddesc">Cod. descuento: </label>
-                        <input type="text" name="coddesc" id="coddesc">
+                    <div class="col">
+                        <div class="row row-cols-2">
+                            <div class="col-4">
+                                <label for="dni" class="offset-1 col-form-label">Producto</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="dni" placeholder="Digite el producto a buscar...">
+                            </div>
+                        </div>
                     </div>
-                    <div class="actions">
-                        <button id="cotizar">Cotizar</button>
-                        <button type="submit">Proceder</button>
+                    <div class="col mt-3 mb-1 d-flex align-items-center justify-content-evenly">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="procedencia" id="generico" value="generico">
+                            <label class="form-check-label" for="generico">Genérico</label>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" id="cotizar" class="btn btn-info text-light"><strong>Buscar</strong></button>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="row row-cols-1">
+                            <div class="col-4 mt-1">
+                                <span class="offset-1">Presentación</span>
+                            </div>
+                            <div class="col mt-3 d-flex justify-content-evenly">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="presentacion" id="caja" value="caja">
+                                    <label class="form-check-label" for="caja">Caja</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="presentacion" id="blister" value="blister">
+                                    <label class="form-check-label" for="blister">Blíster</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 align-items-center">
+                            <div class="col-4">
+                                <label for="dni" class="offset-1 col-form-label">Cod. descuento</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="dni" placeholder="Si posee código de descuento, digitelo aquí...">
+                            </div>
+                        </div>
+                        <hr class="mb-2">
+                    </div>
+                    <div class="col">
+                        <div class="row gx-2">
+                            <div class="col ms-auto text-end">
+                                <button type="button" id="cotizar" class="btn btn-warning text-light"><strong>Cotizar</strong></button>
+                            </div>
+                            <div class="col-auto text-end">
+                                <button type="submit" id="realizar" class="btn btn-outline-success"><strong>Realizar</strong></button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="row">
-            <div class="coincide">
-                <h2>Coincidencias</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Dosis</th>
-                            <th scope="col">Stock</th>
-                            <th scope="col">Anaquel</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Cetirizina</th>
-                            <td>50 mg</td>
-                            <td>13</td>
-                            <td>AB-1</td>
-                            <td><button id="addToCart">+</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Cetirizona</th>
-                            <td>25 mg</td>
-                            <td>20</td>
-                            <td>BC-1</td>
-                            <td><button id="addToCart">+</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Cetirizol</th>
-                            <td>100 mg</td>
-                            <td>30</td>
-                            <td>CD-1</td>
-                            <td><button id="addToCart">+</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="carrito">
-                <h2>Carrito</h2>
-                <div class="listado">
-                    <ul>
-                        <li>
-                            <div>
-                                <span></span>
-                                <span>Anaquel</span>
-                                <span></span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>Cetirizina 50mg</span>
-                                <span>AB-1</span>
-                                <span class="carOpts">
-                                    <button>X</button>
-                                    <input type="number" name="cant" id="cant" value="4">
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span>Cetirizona 25mg</span>
-                                <span>BC-1</span>
-                                <span class="carOpts">
-                                    <button>X</button>
-                                    <input type="number" name="cant" id="cant" value="3">
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="montos">
-                        <span>Subtotal</span>
-                        <span>S/. 56.00</span>
+            <!-- Segunda columna -->
+            <div class="col col-md-6 mt-md-3 text-center mb-3">
+                <div class="row row-cols-1 g-2">
+                    <!-- Coincidencias -->
+                    <div class="col">
+                        <h4>Coincidencias</h4>
+                        <div class="table-responsive overflow-auto" style="height: 40vh;">
+                            <table class="table table-bordered table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Dosis</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Anaquel</th>
+                                        <th scope="col">Pr. unit.</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Cetirizina</th>
+                                        <td>50 mg</td>
+                                        <td>13</td>
+                                        <td>AB-1</td>
+                                        <td>S/. 21.50</td>
+                                        <td><button class="btn btn-outline-success" id="addToCart"><strong>+</strong></button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Cetirizona</th>
+                                        <td>25 mg</td>
+                                        <td>20</td>
+                                        <td>BC-1</td>
+                                        <td>S/. 29.90</td>
+                                        <td><button class="btn btn-outline-success" id="addToCart"><strong>+</strong></button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Cetirizol</th>
+                                        <td>100 mg</td>
+                                        <td>30</td>
+                                        <td>CD-1</td>
+                                        <td>S/. 25.90</td>
+                                        <td><button class="btn btn-outline-success" id="addToCart"><strong>+</strong></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="montos">
-                        <span>IGV</span>
-                        <span>S/ 10.08</span>
-                    </div>
-                    <div class="montos">
-                        <span>Descuento</span>
-                        <span>S/. 5.00</span>
-                    </div>
-                    <div class="montos">
-                        <span>Total</span>
-                        <span>S/. 61.10</span>
+                    <!-- Carrito -->
+                    <div class="col">
+                        <h4>Carrito</h4>
+                        <hr class="mt-4">
+                        <div class="row row-cols-1 g-2 mb-3">
+                            <div class="col">
+                                <!-- Bt -->
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-borderless align-middle" style="table-layout: fixed;">
+                                        <thead class="align-middle">
+                                            <tr>
+                                                <th scope="col">Producto</th>
+                                                <!-- <th></th> -->
+                                                <th scope="col">Anaquel</th>
+                                                <th scope="col">Cantidad</th>
+                                                <th scope="col" class="d-flex justify-content-evenly">
+                                                    <span class="align-baseline mt-1">Precio</span>
+                                                    <button class="btn btn-danger btn-sm py-1 px-2"><strong>X</strong></button>
+                                                </th>
+                                                <!-- <th></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <!-- <th scope="row" rowspan="2">Cetirizina 50mg</th> -->
+                                                <th scope="row" class="text-start">Cetirizina 50mg</th>
+                                                <td>AB-1</td>
+                                                <td>
+                                                    <div class="">
+                                                        <input type="number" class="form-control" name="nomproducto" id="nomproducto" min="0">
+                                                    </div>
+                                                </td>
+                                                <td><span class="ms-3">S/. 600</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>                                    
+                                </div>
+                                <hr class="my-1">
+                            </div>
+                            <div class="col">
+                                <!-- Bt -->
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-borderless align-middle" style="table-layout: fixed;">
+                                        <thead class="align-middle">
+                                            <tr>
+                                                <th scope="col">Producto</th>
+                                                <!-- <th></th> -->
+                                                <th scope="col">Anaquel</th>
+                                                <th scope="col">Cantidad</th>
+                                                <th scope="col" class="d-flex justify-content-evenly">
+                                                    <span class="align-baseline mt-1">Precio</span>
+                                                    <button class="btn btn-danger btn-sm py-1 px-2"><strong>X</strong></button>
+                                                </th>
+                                                <!-- <th></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <!-- <th scope="row" rowspan="2">Cetirizina 50mg</th> -->
+                                                <th scope="row" class="text-start">Cetirizona 25mg</th>
+                                                <td>AB-1</td>
+                                                <td>
+                                                    <div class="">
+                                                        <input type="number" class="form-control" name="nomproducto" id="nomproducto" min="0">
+                                                    </div>
+                                                </td>
+                                                <td><span class="ms-3">S/. 600</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>                                    
+                                </div>
+                                <hr class="my-1">
+                            </div>
+                        </div>
+                        <!-- Resultado -->
+                        <div class="row g-2">
+                            <div class="col ms-auto">
+                                <div class="row row-cols-1 g-2">
+                                    <div class="col ps-4 text-start">
+                                        <span>Subtotal</span>
+                                        <span>S/. 56.00</span>
+                                    </div>
+                                    <div class="col ps-4 text-start">
+                                        <span>IGV</span>
+                                        <span>S/. 10.08</span>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col me-auto">
+                                <div class="row row-cols-1 g-2">
+                                    <div class="col pe-4 text-end">
+                                        <span>Descuento</span>
+                                        <span>S/. 5.00</span>
+                                    </div>
+                                    <div class="col pe-4 text-end">
+                                        <span>Total</span>
+                                        <span>S/. 61.08</span>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="/js/ventas/realizar.js"></script>
 </body>
 </html>

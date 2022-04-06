@@ -65,16 +65,13 @@
                                         <h5 class="card-title card-nombre"><%= prod.nombreProducto %></h5>
                                         <h6 class="card-subtitle text-muted mb-2 card-comp"><%= prod.composicion %></h6>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <!-- <span class="card-text overflow-auto card-pre"><%= prod.nombrePresentacion %><br>Stock: <%= prod.stock %></span> -->
                                             <span class="card-text overflow-auto">
                                                 <span class="card-pre"><%= prod.nombrePresentacion %></span>
                                                 <br>
                                                 <span>Stock: <%= prod.stock %></span>
                                             </span>
                                             <span>
-                                                <button class="btn btn-sm btn-success addItem" id="item<%= prod.idProducto %>">
-                                                    +
-                                                </button>
+                                                <button class="btn btn-sm btn-success fw-bold addItem" id="item<%= prod.idProducto %>">+</button>
                                             </span>
                                         </div>
                                     </div>
@@ -88,7 +85,7 @@
             <div class="col col-md-4 gy-2 mb-3">
                 <h2>R. de compras</h2>
                 <hr>
-                <form action="/compras" method="post">
+                <form action="/compras" method="post" id="formcompra">
                     <!-- Items -->
                     <h5 class="pb-1">Items</h5>
                     <div class="row row-cols-1 g-2 overflow-auto lista-items" style="height: 80vh;"></div>
@@ -99,23 +96,19 @@
                         <div class="col">
                             <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
                                 <div class="col-4 col-md col-xl-4">
-                                    <label for="numserie" class="offset-1 offset-md-0 col-form-label">Nro. serie</label>
+                                    <label for="tipocomp" class="offset-1 offset-md-0 col-form-label">Tipo Comprobante</label>
                                 </div>
                                 <div class="col-8 col-md col-xl-8">
-                                    <input type="text" name="numserie" class="form-control form-control-sm" id="numserie" placeholder="Digite el numero de serie...">
+                                    <select id="tipocomp" name="tipocomp" class="form-select form-select-sm">
+                                        <option selected>Selecciona una opcion...</option>
+                                        <% for (let tipoop of tipoops) { %>
+                                        <option value="<%= tipoop.idTipoOperacion %>"><%= tipoop.nombreTipoOperacion[0].toUpperCase() + tipoop.nombreTipoOperacion.slice(1).toLowerCase() %></option>
+                                        <% } %> 
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
-                                <div class="col-4 col-md col-xl-4">
-                                    <label for="numfactura" class="offset-1 offset-md-0 col-form-label">Nro. factura</label>
-                                </div>
-                                <div class="col-8 col-md col-xl-8">
-                                    <input type="text" name="numfactura" class="form-control form-control-sm" id="numfactura" placeholder="Digite el numero de la factura...">
-                                </div>
-                            </div>
-                        </div>
+                        <div class="col"><div class="row row-cols-1 g-2" id="tipocompcol"></div></div>
                         <div class="col">
                             <div class="row row-cols-2 row-cols-md-1 row-cols-xl-2 align-items-center">
                                 <div class="col-4 col-md col-xl-4">
@@ -137,7 +130,7 @@
                                     <label for="fechacompra" class="offset-1 offset-md-0 col-form-label">Fecha compra</label>
                                 </div>
                                 <div class="col-8 col-md col-xl-8">
-                                    <input type="text" name="fechacompra" class="form-control form-control-sm" id="fechacompra" placeholder="Digite la fecha de compra...">
+                                    <input type="date" name="fechacompra" class="form-control form-control-sm" id="fechacompra" placeholder="Digite la fecha de compra...">
                                 </div>
                             </div>
                         </div>
