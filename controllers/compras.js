@@ -12,7 +12,7 @@ const renderRealizar = async (req, res) => {
         from "Producto" p, "Presentacion" pre, "LoteProducto" lot \
         where p."idPresentacion" = pre."idPresentacion" \
         and lot."idProducto" = p."idProducto" \
-        and lot."estado" = $1 \
+        and lot."estado" ILIKE $1 \
         group by p."idProducto", pre."idPresentacion"',
         values: ['Activo']
     }
@@ -21,7 +21,7 @@ const renderRealizar = async (req, res) => {
     const query2 = {
         text: 'select pro."idProveedor", pro."nombres" \
         from "Proveedor" pro \
-        where pro."estado" = $1',
+        where pro."estado" ILIKE $1',
         values: ['Activo']
     }
 

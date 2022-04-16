@@ -13,54 +13,18 @@
             <!-- Primera columna. Ventas -->
             <div class="col col-md-6 my-3 mb-md-3">
                 <h4 class="text-center">Ventas</h4>
-                <div class="d-flex my-3 justify-content-around">
-                    <button id="esCliente" class="btn btn-dark fw-bold">Cliente</button>
-                    <button id="esVisitante" class="btn btn-dark fw-bold">Visitante</button>
-                </div>
-                <form action="/ventas" class="row row-cols-1 g-2" method="post">
-                    <div class="col">
-                        <div class="row row-cols-2 align-items-center">
-                            <div class="col-4">
-                                <label for="dni" class="offset-1 col-form-label">Tipo Comprobante</label>
-                            </div>
-                            <div class="col-8">
-                                <select class="form-select" id="tipocomp" name="tipocomp">
-                                    <option value="boleta">Boleta</option>
-                                    <option value="factura">Factura</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                <form action="/ventas/realizar" class="row row-cols-1 g-2" method="get">
                     <div class="col">
                         <div class="row row-cols-2">
                             <div class="col-4">
-                                <label for="dni" class="offset-1 col-form-label">DNI</label>
+                                <label for="producto" class="offset-1 col-form-label">Producto</label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="dni" placeholder="Digite el DNI...">
+                                <input type="text" class="form-control" id="producto" name="producto" placeholder="Digite el producto a buscar...">
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="row row-cols-2">
-                            <div class="col-4">
-                                <label for="dni" class="offset-1 col-form-label">Producto</label>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="form-control" id="dni" placeholder="Digite el producto a buscar...">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3 mb-1 d-flex align-items-center justify-content-evenly">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="procedencia" id="generico" value="generico">
-                            <label class="form-check-label" for="generico">Genérico</label>
-                        </div>
-                        <div class="text-end">
-                            <button type="button" id="cotizar" class="btn btn-info text-light"><strong>Buscar</strong></button>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
+                    <!-- <div class="col mb-3">
                         <div class="row row-cols-1">
                             <div class="col-4 mt-1">
                                 <span class="offset-1">Presentación</span>
@@ -76,14 +40,46 @@
                                 </div>
                             </div>
                         </div>
+                    </div> -->
+                    <div class="col mt-3 mb-1 d-flex align-items-center justify-content-evenly">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="procedencia" id="generico" value="generico">
+                            <label class="form-check-label" for="generico">Genérico</label>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" id="cotizar" class="btn btn-info text-light fw-bold">Buscar</button>
+                        </div>
                     </div>
+                </form>
+                <hr>
+                <div class="d-flex my-3 justify-content-around">
+                    <button id="esCliente" class="btn btn-dark fw-bold">Cliente</button>
+                    <button id="esVisitante" class="btn btn-dark fw-bold">Visitante</button>
+                </div>
+                <form action="/ventas" class="row row-cols-1 g-2" method="post">
                     <div class="col">
                         <div class="row row-cols-2 align-items-center">
                             <div class="col-4">
-                                <label for="dni" class="offset-1 col-form-label">Cod. descuento</label>
+                                <label for="tipocomp" class="offset-1 col-form-label">Tipo Comprobante</label>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="dni" placeholder="Si posee código de descuento, digitelo aquí...">
+                                <select class="form-select" id="tipocomp" name="tipocomp">
+                                    <option selected>Selecciona una opcion...</option>
+                                    <% for (let tipoop of tipoops) { %>
+                                    <option value="<%= tipoop.idTipoOperacion %>"><%= tipoop.nombreTipoOperacion[0].toUpperCase() + tipoop.nombreTipoOperacion.slice(1).toLowerCase() %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col"><div class="row row-cols-1 g-2" id="tipocompcol"></div></div>
+                    <div class="col">
+                        <div class="row row-cols-2 align-items-center">
+                            <div class="col-4">
+                                <label for="coddescuento" class="offset-1 col-form-label">Cod. descuento</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="coddescuento" placeholder="Si posee código de descuento, digitelo aquí...">
                             </div>
                         </div>
                         <hr class="mb-2">
@@ -91,10 +87,10 @@
                     <div class="col">
                         <div class="row gx-2">
                             <div class="col ms-auto text-end">
-                                <button type="button" id="cotizar" class="btn btn-warning text-light"><strong>Cotizar</strong></button>
+                                <button type="button" id="cotizar" class="btn btn-warning text-light fw-bold">Cotizar</button>
                             </div>
                             <div class="col-auto text-end">
-                                <button type="submit" id="realizar" class="btn btn-outline-success"><strong>Realizar</strong></button>
+                                <button type="submit" id="realizar" class="btn btn-outline-success fw-bold">Realizar</button>
                             </div>
                         </div>
                     </div>
@@ -119,7 +115,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <% if (busqueda) { %> 
+                                    <!-- <tr>
                                         <th scope="row">Cetirizina</th>
                                         <td>50 mg</td>
                                         <td>13</td>
@@ -142,7 +139,18 @@
                                         <td>CD-1</td>
                                         <td>S/. 25.90</td>
                                         <td><button class="btn btn-outline-success" id="addToCart"><strong>+</strong></button></td>
-                                    </tr>
+                                    </tr> -->
+                                        <% for (const bus of busqueda) { %>
+                                            <tr>
+                                                <th scope="row"><%= bus.nombreProducto %></th>
+                                                <td><%= bus.composicion %></td>
+                                                <td><%= bus.stock %> </td>
+                                                <td><%= bus.anaquel %> </td>
+                                                <td>S/. <%= bus.precioPorUnidad %> </td>
+                                                <td><button class="btn btn-outline-success fw-bold" id="addToCart">+</button></td>
+                                            </tr>
+                                        <% } %> 
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
