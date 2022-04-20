@@ -16,4 +16,4 @@ async function open(sql){
     return res;
 }
 
-exports.open = open;
+exports.open = open
