@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-sm">
+        <div class="row row-cols-1 gy-2">
+            <div class="col">
+                <h1>ESTA ES LA LISTA DE PRODUCTOS</h1>
+                <a class="btn btn-outline-success" href="#" id="btn-addliente">Agregar Producto</a>
+            </div>
+            <div class="col">
+                <div class="row row-cols-1 row-cols-md-3 justify-content-center">
+                    <div class="col col-md-10 col-lg-8 col-xl-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover align-middle text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">N°</th>
+                                        <th scope="col">idProducto</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Composicion</th>
+                                        <th scope="col">Laboratorio</th>
+                                        <th scope="col">Presentacion</th>
+                                        <th scope="col">Stock Minimo</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% let c=0 %>
+                                        <!-- Sintaxis ES6 -->
+                                        <% for (let pro of productos) { %>
+                                            <% c++ %>
+                                                <tr>
+                                                    <td>
+                                                        <%= c %>
+                                                    </td>
+                                                    <td>
+                                                        <%= pro.id %>
+                                                    </td>
+                                                    <td>
+                                                        <%= pro.nombre %>
+                                                    </td>
+                                                    <td>
+                                                        <%= pro.composicion %>
+                                                    </td>
+                                                    <td>
+                                                        <%= pro.lab %>
+                                                    </td>
+                                                    <td>
+                                                        <%= pro.presentacion %>
+                                                    </td>
+                                                    <td>
+                                                        <%= pro.minStock %>
+                                                    </td>
+                                                    <td>
+                                                        <%= pro.est %>
+                                                    </td>
+                                                    <td class="d-flex justify-content-center justify-content-xs-end">
+                                                        <button
+                                                            class="btn btn-warning me-1 modificar">Modificar</button>
+                                                        <a class="btn btn-danger ms-1"
+                                                            href="/empleados/delete_empleado/<%= pro.id %>">Inhabilitar</a>
+                                                        <a class="btn btn-dark ms-1"
+                                                            href="/usuarios/listar/<%= pro.id %>">Lotes</a>
+                                                        <a class="btn btn-secondary ms-1"
+                                                            href="/usuarios/listar/<%= pro.id %>">Generico</a>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <script src="/js/cliente.js"></script>
+</body>
+
+
+</html>

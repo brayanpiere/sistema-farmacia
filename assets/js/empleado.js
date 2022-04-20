@@ -3,17 +3,7 @@ const cargarModalAddEmp = () => {
 }
 
 const cargarModalEditEmp = (e) => {
-    
-    console.log(e.target.parentNode.parentNode.childNodes[3].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[5].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[7].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[9].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[11].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[13].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[15].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[17].textContent.trim())
-    console.log(e.target.parentNode.parentNode.childNodes[19].textContent.trim())
-   
+  
     const txtidEMp = document.querySelector("#idEmp-m")
     const txtnombreEmp = document.querySelector("#nombreEmp-m")
     const txtapellidoEmp = document.querySelector("#apellidoEmp-m")
