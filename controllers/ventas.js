@@ -22,9 +22,10 @@ const renderRealizar = async (req, res) => {
             where p."idProducto" = lot."idProducto"
             and p."idPresentacion" = pre."idPresentacion"
             and p."idProducto" = pr."idProducto"
-            and p."idProducto" = (select p2."idProducto"
+            and p."idProducto" in (select p2."idProducto"
                                     from "Producto" p2
                                     where p2."nombreProducto" ILIKE $1)
+            and lot."fechaCaducidad" - CURRENT_DATE >= 0
             group by p."idProducto", pre."idPresentacion", lot."idProducto", pr."idProducto", pr."precioPorUnidad"`,
             values: [`%${ query }%`]
         }

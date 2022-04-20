@@ -13,7 +13,7 @@
             <!-- Primera columna. Ventas -->
             <div class="col col-md-6 my-3 mb-md-3">
                 <h4 class="text-center">Ventas</h4>
-                <form action="/ventas/realizar" class="row row-cols-1 g-2" method="get">
+                <form action="/ventas/realizar" class="row row-cols-1 g-2" id="buscarform" method="get">
                     <div class="col">
                         <div class="row row-cols-2">
                             <div class="col-4">
@@ -56,7 +56,7 @@
                     <button id="esCliente" class="btn btn-dark fw-bold">Cliente</button>
                     <button id="esVisitante" class="btn btn-dark fw-bold">Visitante</button>
                 </div>
-                <form action="/ventas" class="row row-cols-1 g-2" method="post">
+                <form action="/ventas" class="row row-cols-1 g-2" id="subirform" method="post">
                     <div class="col">
                         <div class="row row-cols-2 align-items-center">
                             <div class="col-4">
@@ -107,9 +107,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Producto</th>
-                                        <th scope="col">Dosis</th>
                                         <th scope="col">Stock</th>
-                                        <th scope="col">Anaquel</th>
+                                        <th scope="col">Pres.</th>
                                         <th scope="col">Pr. unit.</th>
                                         <th></th>
                                     </tr>
@@ -142,12 +141,11 @@
                                     </tr> -->
                                         <% for (const bus of busqueda) { %>
                                             <tr>
-                                                <th scope="row"><%= bus.nombreProducto %></th>
-                                                <td><%= bus.composicion %></td>
-                                                <td><%= bus.stock %> </td>
-                                                <td><%= bus.anaquel %> </td>
-                                                <td>S/. <%= bus.precioPorUnidad %> </td>
-                                                <td><button class="btn btn-outline-success fw-bold" id="addToCart">+</button></td>
+                                                <th scope="row" class="nombreprod"><%= bus.nombreProducto[0] + bus.nombreProducto.slice(1).toLowerCase() %> <%= bus.composicion %></th>
+                                                <td class="stockprod"><%= bus.stock %></td>
+                                                <td class="preprod"><%= bus.nombrePresentacion %></td>
+                                                <td class="pruprod">S/. <%= bus.precioPorUnidad %></td>
+                                                <td><button class="btn btn-outline-success fw-bold addprod" id="add<%= bus.idProducto %>">+</button></td>
                                             </tr>
                                         <% } %> 
                                     <% } %>
@@ -163,57 +161,50 @@
                             <div class="col">
                                 <!-- Bt -->
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-borderless align-middle" style="table-layout: fixed;">
+                                    <table class="table align-middle" style="table-layout: fixed;">
                                         <thead class="align-middle">
                                             <tr>
                                                 <th scope="col">Producto</th>
                                                 <!-- <th></th> -->
                                                 <th scope="col">Anaquel</th>
                                                 <th scope="col">Cantidad</th>
-                                                <th scope="col" class="d-flex justify-content-evenly">
-                                                    <span class="align-baseline mt-1">Precio</span>
-                                                    <button class="btn btn-danger btn-sm py-1 px-2"><strong>X</strong></button>
-                                                </th>
+                                                <th scope="col">Precio</th>
                                                 <!-- <th></th> -->
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <!-- <th scope="row" rowspan="2">Cetirizina 50mg</th> -->
+                                        <tbody id="items">
+                                            <!-- <tr>
                                                 <th scope="row" class="text-start">Cetirizina 50mg</th>
                                                 <td>AB-1</td>
+                                                <td><input type="number" class="form-control" name="nomproducto" id="nomproducto" min="0"></td>
                                                 <td>
-                                                    <div class="">
-                                                        <input type="number" class="form-control" name="nomproducto" id="nomproducto" min="0">
+                                                    <div class="d-flex justify-content-evenly align-items-center align-middle">
+                                                        <span class="align-baseline ms-1 text-center">S/. 600</span>
+                                                        <span><button class="btn btn-danger btn-sm py-1 px-2 fw-bold">X</button></span>
                                                     </div>
                                                 </td>
-                                                <td><span class="ms-3">S/. 600</span></td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>                                    
                                 </div>
-                                <hr class="my-1">
+                                <!-- <hr class="my-1"> -->
                             </div>
-                            <div class="col">
-                                <!-- Bt -->
+                            <!-- <div class="col">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-borderless align-middle" style="table-layout: fixed;">
                                         <thead class="align-middle">
                                             <tr>
                                                 <th scope="col">Producto</th>
-                                                <!-- <th></th> -->
                                                 <th scope="col">Anaquel</th>
                                                 <th scope="col">Cantidad</th>
                                                 <th scope="col" class="d-flex justify-content-evenly">
                                                     <span class="align-baseline mt-1">Precio</span>
                                                     <button class="btn btn-danger btn-sm py-1 px-2"><strong>X</strong></button>
                                                 </th>
-                                                <!-- <th></th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <!-- <th scope="row" rowspan="2">Cetirizina 50mg</th> -->
                                                 <th scope="row" class="text-start">Cetirizona 25mg</th>
                                                 <td>AB-1</td>
                                                 <td>
@@ -227,31 +218,31 @@
                                     </table>                                    
                                 </div>
                                 <hr class="my-1">
-                            </div>
+                            </div> -->
                         </div>
                         <!-- Resultado -->
                         <div class="row g-2">
                             <div class="col ms-auto">
                                 <div class="row row-cols-1 g-2">
                                     <div class="col ps-4 text-start">
-                                        <span>Subtotal</span>
-                                        <span>S/. 56.00</span>
+                                        <span>Subtotal: </span>
+                                        <span><span>S/. </span><span id="subtotal"></span></span>
                                     </div>
                                     <div class="col ps-4 text-start">
-                                        <span>IGV</span>
-                                        <span>S/. 10.08</span>                                        
+                                        <span>IGV: </span>
+                                        <span><span>S/. </span><span id="igv"></span></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col me-auto">
                                 <div class="row row-cols-1 g-2">
                                     <div class="col pe-4 text-end">
-                                        <span>Descuento</span>
-                                        <span>S/. 5.00</span>
+                                        <span>Descuento: </span>
+                                        <span><span>S/. </span><span id="descuento"></span></span>
                                     </div>
                                     <div class="col pe-4 text-end">
-                                        <span>Total</span>
-                                        <span>S/. 61.08</span>                                        
+                                        <span>Total: </span>
+                                        <span><span>S/. </span><span id="total"></span></span>                                        
                                     </div>
                                 </div>
                             </div>
